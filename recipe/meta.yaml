@@ -1,45 +1,46 @@
 {% set name = "celery-redbeat" %}
-{% set version = "2.0.0" %}
+{% set version = "2.3.2" %}
 
 package:
   name: "{{ name|lower }}"
   version: "{{ version }}"
 
 source:
-  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
-  sha256: cb8d6941be5df2666dd3188c3029c74e0fa33d50de6eaf7da88e0a5b591a190c
+  url: https://pypi.org/packages/source/{{ name[0] }}/celery_redbeat-{{ version }}.tar.gz
+  sha256: 7d6e41e4b807fafba5d88b98e3d3863f0df95ac3ed1692d70b134c079b936b8b
 
 build:
-  noarch: python
+  skip: true  # [py<38]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
-  script: "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
   host:
-    - celery
     - pip
     - python
-    - python-dateutil
-    - redis-py
-    - tenacity
   run:
-    - celery
+    - celery >=5.0
     - python
     - python-dateutil
-    - redis-py
+    - redis-py >=3.2
     - tenacity
+    - backports.zoneinfo >=0.2.1  # [py<39]
 
 test:
   imports:
     - redbeat
+  commands:
+    - pip check
+  requires:
+    - pip
 
 about:
-  home: "https://github.com/sibson/redbeat"
+  home: https://github.com/sibson/redbeat
   license: Apache Software
   license_family: APACHE
   license_file: LICENSE 
-  summary: "A Celery Beat Scheduler using Redis for persistent storage"
-  doc_url: "https://redbeat.readthedocs.io/en/latest/" 
+  summary: A Celery Beat Scheduler using Redis for persistent storage
+  doc_url: https://redbeat.readthedocs.io/en/latest/
 
 extra:
   recipe-maintainers:
