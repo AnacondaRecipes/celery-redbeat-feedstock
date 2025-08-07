@@ -38,12 +38,13 @@ test:
 
 about:
   home: https://github.com/sibson/redbeat
-  license: Apache Software
+  license: Apache-2.0
   license_family: APACHE
   license_file: LICENSE 
   summary: A Celery Beat Scheduler using Redis for persistent storage
   description: |
     RedBeat is a Celery Beat Scheduler that stores the scheduled tasks and runtime metadata in Redis.
+  dev_url: https://github.com/sibson/redbeat
   doc_url: https://redbeat.readthedocs.io
 
 extra:
