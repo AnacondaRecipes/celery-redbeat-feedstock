@@ -6,13 +6,13 @@ package:
   version: "{{ version }}"
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/celery_redbeat-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name | replace('-', '_') }}-{{ version }}.tar.gz
   sha256: 7d6e41e4b807fafba5d88b98e3d3863f0df95ac3ed1692d70b134c079b936b8b
 
 build:
+  number: 0
   skip: true  # [py<38]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
 
 requirements:
   host:
@@ -27,12 +27,14 @@ requirements:
     - backports.zoneinfo >=0.2.1  # [py<39]
 
 test:
+  requires:
+    - pip
   imports:
     - redbeat
   commands:
     - pip check
-  requires:
-    - pip
+    # Test are disactivated because all of them need 'fakeredis'which is not available in Conda now (08/07/2025)
+    # - python -m unittest discover gh_src
 
 about:
   home: https://github.com/sibson/redbeat
@@ -40,7 +42,9 @@ about:
   license_family: APACHE
   license_file: LICENSE 
   summary: A Celery Beat Scheduler using Redis for persistent storage
-  doc_url: https://redbeat.readthedocs.io/en/latest/
+  description: |
+    RedBeat is a Celery Beat Scheduler that stores the scheduled tasks and runtime metadata in Redis.
+  doc_url: https://redbeat.readthedocs.io
 
 extra:
   recipe-maintainers:
