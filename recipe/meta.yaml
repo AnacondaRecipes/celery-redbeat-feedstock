@@ -18,6 +18,8 @@ requirements:
   host:
     - pip
     - python
+    - wheel
+    - setuptools
   run:
     - celery >=5.0
     - python
@@ -33,7 +35,7 @@ test:
     - redbeat
   commands:
     - pip check
-    # Test are disactivated because all of them need 'fakeredis'which is not available in Conda now (08/07/2025)
+    # Tests are disactivated because all of them need 'fakeredis' which is not available in Conda now (08/07/2025)
     # - python -m unittest discover gh_src
 
 about:
